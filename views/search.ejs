@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=0.86, maximum-scale=0.86, minimum-scale=0.86">
     <link rel="stylesheet" href="css/search.css">
     <link rel="stylesheet" href="css/header.css">
     <title>Election Search Results</title>
@@ -13,10 +14,25 @@
         <li>
           <a href=<%- article._source.url %>>
             <h3><%- article._source.title %></h3>
-            <cite>
-              <%- article._source.url %>
-            </cite>
+            <span>
+              <% const httpsplit = article._source.url.split("://"); %>
+              <% const protocol = httpsplit[0]; %>
+              <% const host = []; %>
+              <% const subdomains = httpsplit[1].split("."); %>
+              <% for (let i = 0; i < subdomains.length; i++) { %>
+                <% const subdomain = subdomains[i] %>
+                <% if (subdomain.includes("/")) { %>
+                  <% host.push(subdomain.split("/")[0]); %>
+                  <% break; %>
+                <% } %>
+                <% host.push(subdomain); %>
+              <% } %> 
+              <%- `${protocol}://${host.join(".")}` %>
+            </span>
           </a>
+          <p>
+            <%- article._source.title2 || `${article._source.body.split(".")[0]}.` || "" %>
+          </p>
         </li>
       <% }) %>
     </ul>

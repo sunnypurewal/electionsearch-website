@@ -1,7 +1,10 @@
 body {
   text-align: left;
   font-family: sans-serif;
+  color: #222222;
   font-size: 20px;
+  max-width: 100%;
+  margin: auto;
 }
 
 li {
@@ -12,7 +15,7 @@ li {
 ul {
   padding-left: 0px;
   width: 600px;
-  margin-left: 50px;
+  margin: 0 auto;
 }
 
 a {
@@ -29,9 +32,17 @@ h3 {
   margin: 0px;
 }
 
-cite {
+span {
+  display: block;
   font-size: 14px;
   font-style: normal;
   color: #222222;
   text-decoration: none;
+  line-height: 1em;
+}
+
+p {
+  font-size: 14px;
+  color: #333333;
+  margin: 5px 0px;
 }

@@ -6,10 +6,28 @@ export default function search(query: string, retry: number = 0, resolver?: (val
       query: {
           bool : {
               must : {
-                  query_string : {
-                      query,
-                  },
+                query_string : {
+                    query,
+                },
               },
+              should : [
+                {
+                  range: {
+                    timestamp: {
+                      boost: 1.25,
+                      gte: Date.now() - 3600 * 1000,
+                    },
+                  },
+                },
+                {
+                  range: {
+                    timestamp: {
+                      boost: 1.125,
+                      gte: Date.now() - 86400 * 1000,
+                    },
+                  },
+                },
+              ],
           },
       },
       suggest: {

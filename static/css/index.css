@@ -3,19 +3,17 @@ body {
   font-family: sans-serif;
   color: #222222;
   font-size: 20px;
-}
-
-div#content {
-  display: flex;
-  flex-direction: column;
+  max-width: 100%;
+  margin: auto;
 }
 
 div#searchform {
   position: absolute;
   top: 311px;
-  min-width: 980px;
+  /* min-width: 980px; */
   width: 100%;
 }
+
 form#search {
   margin: 0 auto;
 }
@@ -23,7 +21,7 @@ form#search {
 div.search_container {
   display: flex;
   border: 1px solid #dfe1e5;
-  width: 482px;
+  width: 480px;
   height: 44px;
   margin: 0 auto;
   border-radius: 24px;
@@ -77,3 +75,14 @@ input.search_box::focus {
 div#logo {
   position: relative;
 }
+
+
+/* @media screen and (max-device-width: 480px) and (orientation: portrait) {
+  body {
+    width: 480px;
+  }
+  div#searchform {
+    min-width: 0px;
+  }
+
+} */
