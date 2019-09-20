@@ -2,6 +2,11 @@ body {
   text-align: center;
 }
 
+div#content {
+  display: flex;
+  flex-direction: column;
+}
+
 div#searchform {
   position: absolute;
   top: 311px;
@@ -21,9 +26,17 @@ div.search_container {
   border-radius: 24px;
 }
 
+div.search_container:hover {
+  box-shadow: 1px 1px 5px #999;
+}
+
 div.inner_search_container {
   flex: 1;
   display: flex;
+}
+
+label.search_box_label {
+  display: none;
 }
 
 div.search_image {
@@ -56,4 +69,8 @@ input.search_box {
 }
 input.search_box::focus {
   outline: none;
+}
+
+div#logo {
+  position: relative;
 }
