@@ -48,9 +48,11 @@ export default function search(query: string, retry: number = 0, resolver?: (val
           if (corrected.length === query.split(" ").length) {
             search(corrected.join(" "), retry + 1, resolve)
           } else {
+            json.query = query
             resolve(json)
           }
         } else {
+          json.query = query
           resolve(json)
         }
       }

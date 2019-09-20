@@ -1,18 +1,11 @@
-body {
-  text-align: center;
-  font-family: sans-serif;
-  color: #222222;
-  font-size: 20px;
-}
-
-div#content {
-  display: flex;
-  flex-direction: column;
+div#header {
+  height: 50px;
+  margin-bottom: 50px;
 }
 
 div#searchform {
   position: absolute;
-  top: 311px;
+  top: 20px;
   min-width: 980px;
   width: 100%;
 }

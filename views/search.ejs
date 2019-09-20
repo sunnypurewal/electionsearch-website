@@ -3,14 +3,19 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/header.css">
     <title>Election Search Results</title>
   </head>
   <body>
+    <%- include("header", {query: query}) %>
     <ul>
       <% articles.hits.hits.forEach((article) => { %>
         <li>
           <a href=<%- article._source.url %>>
-            <%- article._source.title %>
+            <h3><%- article._source.title %></h3>
+            <cite>
+              <%- article._source.url %>
+            </cite>
           </a>
         </li>
       <% }) %>

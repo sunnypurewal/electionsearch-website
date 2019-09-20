@@ -14,7 +14,7 @@ app.get("/", (_, res: express.Response) => {
 app.get("/search", (req: express.Request, res: express.Response) => {
   search(req.query.q)
   .then((json: any) => {
-    res.render("search", {articles: json})
+    res.render("search", {articles: json, query: req.query.q})
   })
 })
 
