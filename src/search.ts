@@ -14,7 +14,7 @@ export default function search(query: string, retry: number = 0, resolver?: (val
                 {
                   range: {
                     timestamp: {
-                      boost: 1.25,
+                      boost: 1.5,
                       gte: Date.now() - 3600 * 1000,
                     },
                   },
@@ -22,8 +22,24 @@ export default function search(query: string, retry: number = 0, resolver?: (val
                 {
                   range: {
                     timestamp: {
-                      boost: 1.125,
+                      boost: 1.25,
                       gte: Date.now() - 86400 * 1000,
+                    },
+                  },
+                },
+                {
+                  range: {
+                    timestamp: {
+                      boost: 0.8,
+                      lte: Date.now() - 86400 * 3 * 1000,
+                    },
+                  },
+                },
+                {
+                  range: {
+                    timestamp: {
+                      boost: 0.5,
+                      lte: Date.now() - 86400 * 7 * 1000,
                     },
                   },
                 },

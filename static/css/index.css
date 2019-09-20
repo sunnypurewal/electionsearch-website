@@ -5,12 +5,12 @@ body {
   font-size: 20px;
   max-width: 100%;
   margin: auto;
+  overflow-x: hidden;
 }
 
 div#searchform {
-  position: absolute;
+  position: relative;
   top: 311px;
-  /* min-width: 980px; */
   width: 100%;
 }
 
@@ -21,7 +21,8 @@ form#search {
 div.search_container {
   display: flex;
   border: 1px solid #dfe1e5;
-  width: 480px;
+  min-width: 480px;
+  max-width: 44%;
   height: 44px;
   margin: 0 auto;
   border-radius: 24px;
@@ -74,15 +75,20 @@ input.search_box::focus {
 
 div#logo {
   position: relative;
+  margin: 0px;
+  padding: 0px;
+  top: 180px;
+}
+
+h1 {
+  margin: 0px;
+  padding: 0px;
 }
 
 
-/* @media screen and (max-device-width: 480px) and (orientation: portrait) {
-  body {
-    width: 480px;
-  }
-  div#searchform {
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  div.search_container {
+    max-width: 90%;
     min-width: 0px;
   }
-
-} */
+}
