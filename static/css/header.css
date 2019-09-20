@@ -6,7 +6,6 @@ div#header {
 div#searchform {
   position: absolute;
   top: 20px;
-  min-width: 980px;
   width: 100%;
 }
 form#search {
@@ -16,7 +15,8 @@ form#search {
 div.search_container {
   display: flex;
   border: 1px solid #dfe1e5;
-  width: 482px;
+  min-width: 480px;
+  max-width: 600px;
   height: 44px;
   margin: 0 auto;
   border-radius: 24px;
@@ -69,4 +69,11 @@ input.search_box::focus {
 
 div#logo {
   position: relative;
+}
+
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  div.search_container {
+    max-width: 90%;
+    min-width: 0px;
+  }
 }

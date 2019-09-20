@@ -15,13 +15,14 @@ li {
 
 ul {
   padding-left: 0px;
-  width: 600px;
+  min-width: 480px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
 a {
   text-decoration: none;
-  color: #1a0dab;
+  color: #ab0d1a;
 }
 
 a:hover {
@@ -37,9 +38,11 @@ span {
   display: block;
   font-size: 14px;
   font-style: normal;
-  color: #222222;
+  /* color: #222222; */
+  color: #002166;
   text-decoration: none;
-  line-height: 1em;
+  margin: 0px;
+  padding: 0px;
 }
 
 p {
