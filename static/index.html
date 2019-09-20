@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Election Search</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/index.js"></script>
+  </head>
+  <body>
+    <div id="searchform">
+      <form id="search" action="/search" method="GET" onsubmit="return q.value!=''">
+        <div class="search_container">
+          <div class="inner_search_container">
+            <div class="search_image">
+              <img src="img/maple-leaf.svg"/>
+            </div>
+            <div class="search_box_container">
+              <input class="search_box" name="q" type="text" maxlength="2048" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" title="Search" value=""/>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
