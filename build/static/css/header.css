@@ -4,11 +4,10 @@ div#header {
 }
 
 div#searchform {
-  position: absolute;
-  top: 20px;
-  min-width: 980px;
+  position: relative;
   width: 100%;
 }
+
 form#search {
   margin: 0 auto;
 }
@@ -16,7 +15,8 @@ form#search {
 div.search_container {
   display: flex;
   border: 1px solid #dfe1e5;
-  width: 482px;
+  min-width: 480px;
+  max-width: 600px;
   height: 44px;
   margin: 0 auto;
   border-radius: 24px;
@@ -69,4 +69,23 @@ input.search_box::focus {
 
 div#logo {
   position: relative;
+  text-align: center;
+  margin: 20px 0px;
+}
+
+div#logo > a {
+  color: #222222;
+  font-family: sans-serif;
+  position: relative;
+  text-decoration: none;
+  z-index: 100;
+  font-size: 30px;
+}
+
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  
+  div.search_container {
+    max-width: 90%;
+    min-width: 0px;
+  }
 }

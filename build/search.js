@@ -1,14 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var node_fetch_1 = require("node-fetch");
-function search(query, retry, resolver) {
+// tslint:disable-next-line: max-line-length
+function search(query, from, retry, resolver) {
+    if (from === void 0) { from = 0; }
     if (retry === void 0) { retry = 0; }
     return new Promise(function (resolve, _) {
         var body = {
+            from: from,
             query: {
-                bool: {
-                    must: {
-                        query_string: {
+                function_score: {
+                    functions: [
+                        {
+                            linear: {
+                                timestamp: {
+                                    scale: "7d",
+                                },
+                            },
+                        },
+                    ],
+                    query: {
+                        multi_match: {
+                            fields: ["body", "title", "tags"],
                             query: query,
                         },
                     },
@@ -31,6 +44,7 @@ function search(query, retry, resolver) {
         })
             .then(function (response) { return response.json(); })
             .then(function (json) {
+            json.query = query;
             if (json.hits.hits.length > 0) {
                 if (resolver) {
                     resolver(json);
@@ -49,19 +63,18 @@ function search(query, retry, resolver) {
                         }
                     });
                     if (corrected_1.length === query.split(" ").length) {
-                        search(corrected_1.join(" "), retry + 1, resolve);
+                        search(corrected_1.join(" "), from, retry + 1, resolve);
                     }
                     else {
-                        json.query = query;
                         resolve(json);
                     }
                 }
                 else {
-                    json.query = query;
                     resolve(json);
                 }
             }
-        });
+        })
+            .catch(function (e) { return console.log(e); });
     });
 }
 exports.default = search;

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var path = require("path");
 var search_1 = require("./search");
+// import url = require("url")
 var app = express();
 app.set("view engine", "ejs");
 app.use(express.static("static"));
@@ -11,9 +12,24 @@ app.get("/", function (_, res) {
     res.sendFile(path.join(__dirname + "/static/index.html"));
 });
 app.get("/search", function (req, res) {
-    search_1.default(req.query.q)
+    var from = ((req.query.page || 1) - 1) * 10;
+    search_1.default(req.query.q, from)
         .then(function (json) {
-        res.render("search", { articles: json, query: req.query.q });
+        var options = {
+            articles: json,
+            host: req.protocol + "://" + req.headers.host,
+            page: req.query.page || 1,
+            query: json.query,
+        };
+        if (json.query !== req.query.q) {
+            res.redirect(req.protocol + "://" + req.headers.host + "?q=" + json.query);
+        }
+        else {
+            res.render("search", options);
+        }
+        // else {
+        // res.redirect(`${req.protocol}://${req.headers.host}`)
+        // }
     });
 });
 app.listen(port, "0.0.0.0", function () {

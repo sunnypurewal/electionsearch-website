@@ -2,14 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Election Search</title>
     <link rel="stylesheet" href="css/index.css">
     <script src="js/index.js"></script>
   </head>
   <body>
-    <div id="logo">
-      <h1>Election Search</h1>
-    </div>
+    <a id="about" href="about.html">About</a>
     <div id="searchform">
       <form id="search" action="/search" method="GET" onsubmit="return q.value!=''">
         <label for="search_box">
@@ -19,12 +18,16 @@
                 <img src="img/maple-leaf.svg"/>
               </div>
               <div class="search_box_container">
-                <input class="search_box" id="search_box" name="q" type="text" maxlength="2048" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" title="Search" value=""/>
+                <input class="search_box" id="search_box" name="q" type="text" maxlength="2048" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" title="Search" value="" autofocus/>
               </div>
             </div>
           </div>
         </label>
       </form>
     </div>
+    <div id="logo">
+        <h1>Election Search</h1>
+        <span>Just news. No ads. No distractions.</span>
+      </div>
   </body>
 </html>
