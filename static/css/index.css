@@ -99,6 +99,10 @@ a#about {
   top: 20px;
 }
 
+*:focus {
+  outline: none;
+}
+
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
   div.search_container {
     max-width: 90%;
