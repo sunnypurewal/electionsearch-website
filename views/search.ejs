@@ -9,6 +9,9 @@
   </head>
   <body>
     <%- include("header", {query: query, host: host}) %>
+    <% if (articles.hits.total.value === 0) {%>
+      <span style="text-align: center; font-size: 20px; padding: 20px 0px; color: #FF0000">No Results Found</span>
+    <% } %>
     <ul>
       <% articles.hits.hits.forEach((article) => { %>
         <li>
@@ -44,13 +47,15 @@
       <% }) %>
     </ul>
     <div id="pagination">
-      Page
-      <% const max = Math.max(1, Math.min(10, articles.hits.total.value/10)) %>
-      <% for (let i = 1; i <= max; i++) { %>
-        <% if (i == page) { %>
-          <%- i %>
-        <% } else { %>
-          <a href="<%- `${host}/search?q=${query.replace(' ', '+')}&page=${i}` %>"><%- i %></a>
+      <% if (articles.hits.total.value > 0) {%>
+        Page
+        <% const max = Math.max(1, Math.min(10, articles.hits.total.value/10)) %>
+        <% for (let i = 1; i <= max; i++) { %>
+          <% if (i == page) { %>
+            <%- i %>
+          <% } else { %>
+            <a href="<%- `${host}/search?q=${query.replace(' ', '+')}&page=${i}` %>"><%- i %></a>
+          <% } %>
         <% } %>
       <% } %>
     </div>

@@ -27,7 +27,10 @@ app.get("/search", (req: express.Request, res: express.Response) => {
       res.redirect(`${req.protocol}://${req.headers.host}?q=${json.query}`)
     } else {
       res.render("search", options)
-    }
+    } 
+    // else {
+      // res.redirect(`${req.protocol}://${req.headers.host}`)
+    // }
   })
 })
 
