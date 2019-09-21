@@ -80,11 +80,24 @@ div#logo {
   top: 180px;
 }
 
-h1 {
+div#logo > h1 {
   margin: 0px;
   padding: 0px;
 }
 
+div#logo > span {
+  font-size: 18px;
+  padding: 0px;
+  margin: 0px;
+}
+
+a#about {
+  font-size: 18px;
+  left: 20px;
+  position: absolute;
+  color: #002166;
+  top: 20px;
+}
 
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
   div.search_container {

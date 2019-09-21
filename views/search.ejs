@@ -8,7 +8,7 @@
     <title>Election Search Results</title>
   </head>
   <body>
-    <%- include("header", {query: query}) %>
+    <%- include("header", {query: query, host: host}) %>
     <ul>
       <% articles.hits.hits.forEach((article) => { %>
         <li>
@@ -31,10 +31,28 @@
             </span>
           </a>
           <p>
-            <%- article._source.title2 || `${article._source.body.split(".")[0]}.` || "" %>
+            <% let slice = 1 %>
+            <% let preview = "" %>
+            <% let bodysplit = article._source.body.split(".") %>
+            <% while (preview.length < 200) { %>
+              <% preview = bodysplit.slice(0, slice).join(".")  %>
+              <% slice += 1 %>
+            <% } %>
+            <%- article._source.title2 || `${preview}.` || "" %>
           </p>
         </li>
       <% }) %>
     </ul>
+    <div id="pagination">
+      Page
+      <% const max = Math.max(1, Math.min(10, articles.hits.total.value/10)) %>
+      <% for (let i = 1; i <= max; i++) { %>
+        <% if (i == page) { %>
+          <%- i %>
+        <% } else { %>
+          <a href="<%- `${host}/search?q=${query.replace(' ', '+')}&page=${i}` %>"><%- i %></a>
+        <% } %>
+      <% } %>
+    </div>
   </body>
 </html>

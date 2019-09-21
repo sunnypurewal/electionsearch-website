@@ -1,50 +1,28 @@
 import fetch from "node-fetch"
 
-export default function search(query: string, retry: number = 0, resolver?: (value?: unknown) => void) {
+// tslint:disable-next-line: max-line-length
+export default function search(query: string, from: number = 0, retry: number = 0, resolver?: (value?: unknown) => void) {
   return new Promise((resolve, _) => {
     const body = {
+      from  ,
       query: {
-          bool : {
-              must : {
-                query_string : {
-                    query,
-                },
+        function_score: {
+          functions: [
+            {
+              linear: {
+                  timestamp: {
+                    scale: "7d",
+                  },
               },
-              should : [
-                {
-                  range: {
-                    timestamp: {
-                      boost: 1.5,
-                      gte: Date.now() - 3600 * 1000,
-                    },
-                  },
-                },
-                {
-                  range: {
-                    timestamp: {
-                      boost: 1.25,
-                      gte: Date.now() - 86400 * 1000,
-                    },
-                  },
-                },
-                {
-                  range: {
-                    timestamp: {
-                      boost: 0.8,
-                      lte: Date.now() - 86400 * 3 * 1000,
-                    },
-                  },
-                },
-                {
-                  range: {
-                    timestamp: {
-                      boost: 0.5,
-                      lte: Date.now() - 86400 * 7 * 1000,
-                    },
-                  },
-                },
-              ],
+            },
+          ],
+          query: {
+            multi_match: {
+              fields: ["body", "title", "tags"],
+              query,
+            },
           },
+        },
       },
       suggest: {
         corrections: {
@@ -64,6 +42,7 @@ export default function search(query: string, retry: number = 0, resolver?: (val
     })
     .then((response) => response.json())
     .then((json) => {
+      json.query = query
       if (json.hits.hits.length > 0) {
         if (resolver) {
           resolver(json)
@@ -80,16 +59,15 @@ export default function search(query: string, retry: number = 0, resolver?: (val
             }
           })
           if (corrected.length === query.split(" ").length) {
-            search(corrected.join(" "), retry + 1, resolve)
+            search(corrected.join(" "), from, retry + 1, resolve)
           } else {
-            json.query = query
             resolve(json)
           }
         } else {
-          json.query = query
           resolve(json)
         }
       }
     })
+    .catch((e) => console.log(e))
   })
 }

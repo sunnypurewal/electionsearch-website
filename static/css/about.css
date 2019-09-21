@@ -1,0 +1,56 @@
+body {
+  text-align: center;
+  font-family: sans-serif;
+  color: #222222;
+  font-size: 20px;
+  max-width: 100%;
+  margin: auto;
+  overflow-x: hidden;
+}
+
+div#about {
+  text-align: left;
+  min-width: 480px;
+  max-width: 600px;
+  margin: 10px auto;
+}
+
+img {
+  width: 200px;
+  height: 200px;
+}
+
+h2 {
+  display: inline;
+}
+
+span {
+  line-height: 1.25;
+}
+
+
+li {
+  list-style: none;
+  padding: 5px 0px;
+  text-align: center;
+}
+
+ul {
+  margin: 0 auto;
+  max-width: 600px;
+  min-width: 480px;
+  padding-left: 0px;
+}
+
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+
+  div#about {
+    min-width: 0px;
+    max-width: 90%;
+  }
+
+  ul {
+    min-width: 0px;
+    max-width: 90%;
+  }
+}
