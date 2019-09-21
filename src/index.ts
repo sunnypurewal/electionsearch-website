@@ -24,7 +24,7 @@ app.get("/search", (req: express.Request, res: express.Response) => {
       // searchhost: `${req.protocol}://${req.headers.host}?q=${json.query}`,
     }
     if (json.query !== req.query.q) {
-      res.redirect(`${req.protocol}://${req.headers.host}?q=${json.query}`)
+      res.redirect(`${req.protocol}://${req.headers.host}/search?q=${json.query}`)
     } else {
       res.render("search", options)
     } 
