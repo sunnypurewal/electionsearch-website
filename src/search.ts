@@ -43,14 +43,14 @@ export default function search(query: string, from: number = 0, retry: number = 
     .then((response) => response.json())
     .then((json) => {
       json.query = query
-      if (json.hits.hits.length > 0) {
+      if (json.hits.hits.length || 0 > 0) {
         if (resolver) {
           resolver(json)
         } else {
           resolve(json)
         }
       } else {
-        const corrections = json.suggest.corrections as any[]
+        const corrections = json.suggest.corrections as any[] || []
         if (!retry) {
           const corrected: string[] = []
           corrections.forEach((c) => {
