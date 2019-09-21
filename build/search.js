@@ -45,7 +45,7 @@ function search(query, from, retry, resolver) {
             .then(function (response) { return response.json(); })
             .then(function (json) {
             json.query = query;
-            if (json.hits.hits.length > 0) {
+            if (json.hits.hits.length || 0 > 0) {
                 if (resolver) {
                     resolver(json);
                 }
@@ -54,7 +54,7 @@ function search(query, from, retry, resolver) {
                 }
             }
             else {
-                var corrections = json.suggest.corrections;
+                var corrections = json.suggest.corrections || [];
                 if (!retry) {
                     var corrected_1 = [];
                     corrections.forEach(function (c) {
