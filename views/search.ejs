@@ -17,6 +17,7 @@
         <li>
           <a href=<%- article._source.url %>>
             <h3><%- article._source.title %></h3>
+            <h5 style="margin:0px;padding:0px;"><%- article._score %></h5>
             <span>
               <% const httpsplit = article._source.url.split("://"); %>
               <% const protocol = httpsplit[0]; %>
@@ -37,7 +38,7 @@
             <% let slice = 1 %>
             <% let preview = "" %>
             <% let bodysplit = article._source.body.split(".") %>
-            <% while (preview.length < 200) { %>
+            <% while (preview.length < 200 && slice <= bodysplit.length) { %>
               <% preview = bodysplit.slice(0, slice).join(".")  %>
               <% slice += 1 %>
             <% } %>

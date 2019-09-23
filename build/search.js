@@ -10,12 +10,20 @@ function search(query, from, retry, resolver) {
             from: from,
             query: {
                 function_score: {
+                    boost_mode: "sum",
                     functions: [
                         {
-                            linear: {
-                                timestamp: {
-                                    scale: "7d",
-                                },
+                            random_score: {
+                                field: "_seq_no",
+                                seed: 10,
+                            },
+                            weight: 0.0001,
+                        },
+                        {
+                            field_value_factor: {
+                                factor: 1 / (Date.now() * 1000),
+                                field: "timestamp",
+                                missing: 0,
                             },
                         },
                     ],
@@ -25,8 +33,17 @@ function search(query, from, retry, resolver) {
                             query: query,
                         },
                     },
+                    score_mode: "sum",
                 },
             },
+            // sort: [
+            //   "_score",
+            //   {
+            //     timestamp: {
+            //       order: "desc",
+            //     },
+            //   },
+            // ],
             suggest: {
                 corrections: {
                     term: {
