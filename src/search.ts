@@ -5,56 +5,17 @@ export default function search(query: string, from: number = 0, retry: number = 
   return new Promise((resolve, _) => {
     const body = {
       from,
-      query: {
-        function_score: {
-          boost_mode: "multiply",
-          functions: [
-            // {
-            //   random_score: {
-            //     field: "_seq_no",
-            //     seed: 10,
-            //   },
-            //   weight: 0.0001,
-            // },
-            // {
-            //   field_value_factor: {
-            //     factor: 1 / Date.now(),
-            //     field: "timestamp",
-            //     missing: 0,
-            //   },
-            // },
-            // {
-            //   linear: {
-            //     timestamp: {
-            //       decay: 0.5,
-            //       scale: "7d",
-            //     },
-            //   },
-            // },
-          ],
-          query: {
-            range: {
-              timestamp: {
-                boost: 50,
-                gte: "2019-09-11",
-              },
-            },
-            multi_match: {
-              fields: ["body^0.5", "title^1.5", "tags^0.5"],
-              query,
-            },
+      query : {
+        multi_match: {
+          fields: ["body^0.5", "title^1.5", "tags^0.5"],
+          query,
+        },
+        range: {
+          timestamp: {
+            gte: "2019-09-11",
           },
-          score_mode: "sum",
         },
       },
-      // sort: [
-      //   "_score",
-      //   {
-      //     timestamp: {
-      //       order: "desc",
-      //     },
-      //   },
-      // ],
       suggest: {
         corrections: {
           term: {
