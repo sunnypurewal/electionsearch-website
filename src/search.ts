@@ -6,16 +6,27 @@ export default function search(query: string, from: number = 0, retry: number = 
     const body = {
       from,
       query : {
-        multi_match: {
-          fields: ["body^0.5", "title^1.5", "tags^0.5"],
-          query,
-        },
-        range: {
-          timestamp: {
-            gte: "2019-09-11",
+        bool: {
+          must: {
+            multi_match: {
+              fields: ["body^0.75", "title^1.5", "tags^0.5"],
+              query,
+            },
+          },
+          should: {
+            range: {
+              timestamp: {
+                boost: 0,
+                lte: 1568160000,
+              },
+            },
           },
         },
       },
+      sort: [
+        "_score",
+        {timestamp: "desc"},
+      ],
       suggest: {
         corrections: {
           term: {
