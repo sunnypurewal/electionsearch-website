@@ -10,18 +10,17 @@ function search(query, from, retry, resolver) {
             from: from,
             query: {
                 bool: {
+                    filter: {
+                        range: {
+                            timestamp: {
+                                gte: 1568160000,
+                            },
+                        },
+                    },
                     must: {
                         multi_match: {
                             fields: ["body^0.75", "title^1.5", "tags^0.5"],
                             query: query,
-                        },
-                    },
-                    should: {
-                        range: {
-                            timestamp: {
-                                boost: 0,
-                                lte: 1568160000,
-                            },
                         },
                     },
                 },
