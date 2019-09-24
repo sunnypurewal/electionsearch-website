@@ -17,7 +17,7 @@
         <li>
           <a href=<%- article._source.url %>>
             <h3><%- article._source.title %></h3>
-            <h5 style="margin:0px;padding:0px;"><%- article._score %></h5>
+            <!-- <h5 style="margin:0px;padding:0px;"><%- article._score %></h5> -->
             <span>
               <% const httpsplit = article._source.url.split("://"); %>
               <% const protocol = httpsplit[0]; %>
