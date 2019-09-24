@@ -9,41 +9,27 @@ function search(query, from, retry, resolver) {
         var body = {
             from: from,
             query: {
-                function_score: {
-                    boost_mode: "sum",
-                    functions: [
-                        {
-                            random_score: {
-                                field: "_seq_no",
-                                seed: 10,
-                            },
-                            weight: 0.0001,
-                        },
-                        {
-                            field_value_factor: {
-                                factor: 1 / (Date.now() * 1000),
-                                field: "timestamp",
-                                missing: 0,
-                            },
-                        },
-                    ],
-                    query: {
+                bool: {
+                    must: {
                         multi_match: {
-                            fields: ["body", "title", "tags"],
+                            fields: ["body^0.75", "title^1.5", "tags^0.5"],
                             query: query,
                         },
                     },
-                    score_mode: "sum",
+                    should: {
+                        range: {
+                            timestamp: {
+                                boost: 0,
+                                lte: 1568160000,
+                            },
+                        },
+                    },
                 },
             },
-            // sort: [
-            //   "_score",
-            //   {
-            //     timestamp: {
-            //       order: "desc",
-            //     },
-            //   },
-            // ],
+            sort: [
+                "_score",
+                { timestamp: "desc" },
+            ],
             suggest: {
                 corrections: {
                     term: {
@@ -61,9 +47,12 @@ function search(query, from, retry, resolver) {
         })
             .then(function (response) { return response.json(); })
             .then(function (json) {
+            console.log("Received json response from elasticsearch", query);
             json.query = query;
             if (json.hits.hits.length || 0 > 0) {
+                console.log("Got " + json.hits.hits.length + " hits");
                 if (resolver) {
+                    console.log("Using existing resolver");
                     resolver(json);
                 }
                 else {
@@ -71,6 +60,7 @@ function search(query, from, retry, resolver) {
                 }
             }
             else {
+                console.log("Got 0 hits");
                 var corrections = json.suggest.corrections || [];
                 if (!retry) {
                     var corrected_1 = [];

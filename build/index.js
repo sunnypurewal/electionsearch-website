@@ -22,9 +22,11 @@ app.get("/search", function (req, res) {
             query: json.query,
         };
         if (json.query !== req.query.q) {
+            console.log("Redirected to correct spelling", json.query);
             res.redirect(req.protocol + "://" + req.headers.host + "/search?q=" + json.query);
         }
         else {
+            console.log("Rendering search page");
             res.render("search", options);
         }
         // else {
